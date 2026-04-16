@@ -40,7 +40,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      z-index: 9999; /* Behind content but above background */
+      z-index: 9999;
       pointer-events: none;
     }
 
@@ -69,6 +69,7 @@
       box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6);
       border: 1px solid rgba(148, 163, 184, 0.2);
       backdrop-filter: blur(16px);
+      transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
     }
 
     @media (min-width: 640px) {
@@ -161,7 +162,7 @@
       min-height: 3rem;
     }
 
-    /* SECTION 2: Image with Text (New) */
+    /* SECTION 2: Image with Text */
     #diamond {
       background: #020617;
     }
@@ -222,10 +223,56 @@
       transform: scale(1.05);
     }
 
-    /* SECTION 3: CARDS (Slick Slider) */
+    /* NEW SECTION 3: QUALITIES GRID */
+    #qualities {
+      background: radial-gradient(circle at bottom, #0f172a 0, #020617 80%);
+    }
+
+    .qualities-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      margin-top: 50px;
+      width: 100%;
+    }
+
+    .quality-card {
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .quality-card:hover {
+      transform: translateY(-10px);
+      border-color: rgba(249, 115, 22, 0.5);
+      box-shadow: 0 20px 40px rgba(249, 115, 22, 0.15);
+    }
+
+    .quality-icon {
+      font-size: 2.5rem;
+      background: linear-gradient(135deg, #facc15, #f97316);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 5px;
+    }
+
+    .quality-card h3 {
+      font-size: 1.4rem;
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .quality-card p {
+      color: #cbd5e1;
+      line-height: 1.7;
+      font-size: 1.05rem;
+    }
+
+    /* SECTION 4: CARDS (Slick Slider) */
     #memories {
-      background: radial-gradient(circle at center, #0f172a 0, #020617 100%);
-      display: block; /* Overriding flex for slick slider layout */
+      background: #020617;
+      display: block;
       padding: 100px 20px;
     }
 
@@ -242,7 +289,7 @@
       background: #000;
       border: 1px solid rgba(255,255,255,0.1);
       box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-      height: 400px; /* Fixed height for uniform cards */
+      height: 400px;
       outline: none;
     }
 
@@ -284,7 +331,6 @@
       font-weight: 500;
     }
 
-    /* Slick Customizations */
     .slick-prev:before, .slick-next:before {
       color: #f97316 !important;
       font-size: 30px !important;
@@ -297,7 +343,7 @@
       color: #f97316 !important;
     }
 
-    /* SECTION 4: GIFT */
+    /* SECTION 5: GIFT */
     #gift {
       background: radial-gradient(circle at top, #111827 0, #020617 60%);
     }
@@ -430,7 +476,7 @@
       opacity: 0;
       transform: translateY(30px);
       transition: all 0.6s ease;
-      display: none; /* hidden until clicked */
+      display: none; 
     }
 
     .letter.visible {
@@ -452,9 +498,41 @@
       color: #e2e8f0;
     }
 
-    /* SECTION 5: BUY YOUR OWN / WhatsApp */
-    #wish {
+    /* NEW SECTION 6: FUTURE PROMISES */
+    #future {
       background: #020617;
+      position: relative;
+    }
+
+    .future-box {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+      padding: 50px 30px;
+      border: 1px solid rgba(236, 72, 153, 0.3);
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.9) 0%, rgba(2, 6, 23, 1) 100%);
+    }
+
+    .future-box p {
+      font-size: 1.2rem;
+      line-height: 2;
+      color: #e2e8f0;
+      margin-bottom: 20px;
+      font-style: italic;
+    }
+
+    .signature {
+      font-size: 1.1rem;
+      color: #facc15;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-top: 30px;
+    }
+
+    /* SECTION 7: BUY YOUR OWN / WhatsApp */
+    #wish {
+      background: radial-gradient(circle at top, #0f172a 0, #020617 100%);
       border-top: 1px solid rgba(255,255,255,0.05);
     }
 
@@ -530,6 +608,37 @@
     </div>
   </section>
 
+  <section id="qualities">
+    <div class="centered-column">
+      <div class="pill">
+        <span class="pill-dot"></span>
+        <span>Best Friend Traits</span>
+      </div>
+      <h2 class="section-title">Things I Admire About You</h2>
+      <p class="subtitle">
+        It is easy to be friends with someone as amazing as you. Here is why you are simply the best.
+      </p>
+
+      <div class="qualities-grid">
+        <div class="glass-card quality-card">
+          <div class="quality-icon">✨</div>
+          <h3>Your Energy</h3>
+          <p>You always bring so much life and happiness into the room. Your positive vibe makes everyone around you feel good.</p>
+        </div>
+        <div class="glass-card quality-card">
+          <div class="quality-icon">🫂</div>
+          <h3>Your Support</h3>
+          <p>You are always there to listen. Even when I make no sense, you patiently hear me out and stand by my side.</p>
+        </div>
+        <div class="glass-card quality-card">
+          <div class="quality-icon">💛</div>
+          <h3>Your Big Heart</h3>
+          <p>You genuinely care about people. The way you look out for everyone and handle things responsibly is truly inspiring.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section id="memories">
     <div class="centered-column">
       <div class="pill">
@@ -596,6 +705,21 @@
     </div>
   </section>
 
+  <section id="future">
+    <div class="centered-column">
+      <div class="glass-card future-box">
+        <div class="pill" style="margin-bottom: 25px;">
+          <span class="pill-dot"></span>
+          <span>A Promise To You</span>
+        </div>
+        <p>"As you step into this new year of life, I want to make a simple promise to you."</p>
+        <p>"I promise to always cheer the loudest when you win, and sit quietly with you when you are tired. I promise to keep making silly memories, taking endless photos, and always being a safe place for you to just be yourself."</p>
+        <p>"No matter where life takes us, I will always be by your side."</p>
+        <div class="signature">— Your Best Friend</div>
+      </div>
+    </div>
+  </section>
+
   <section id="gift">
     <div class="gift-layout">
       <div class="gift-column">
@@ -644,7 +768,7 @@
 
       <div class="shop-card">
         <p style="font-size: 1.05rem; margin-bottom: 15px;">
-          Write your birthday wish below, then tap "Send to WhatsApp" to share it.
+          Write your birthday wish below, then tap "Send to WhatsApp" to share it with me.
         </p>
         <textarea id="wishText" rows="4" placeholder="This year, I promise myself that..."></textarea>
         <button class="cta-btn" onclick="sendWishToWhatsApp()" style="width: 100%; max-width: 300px;">
@@ -753,13 +877,11 @@
         this.color = color || colors[Math.floor(Math.random() * colors.length)];
         
         if (this.isRocket) {
-          // Shoot up
           this.vx = (Math.random() - 0.5) * 2;
-          this.vy = -(Math.random() * 6 + 10); // Made them shoot a little higher
+          this.vy = -(Math.random() * 6 + 10); 
           this.life = 1;
           this.decay = 0.01 + Math.random() * 0.01;
         } else {
-          // Explode outwards
           const angle = Math.random() * Math.PI * 2;
           const speed = Math.random() * 6 + 2;
           this.vx = Math.cos(angle) * speed;
@@ -775,10 +897,10 @@
         this.life -= this.decay;
 
         if (this.isRocket) {
-          this.vy += 0.15; // Gravity pulling rocket down
+          this.vy += 0.15; 
         } else {
-          this.vy += 0.08; // Gravity for explosion particles
-          this.vx *= 0.96; // Friction to slow them down
+          this.vy += 0.08; 
+          this.vx *= 0.96; 
         }
       }
 
@@ -788,24 +910,21 @@
         ctx.fillStyle = this.color;
         ctx.globalAlpha = Math.max(0, this.life);
         ctx.fill();
-        ctx.globalAlpha = 1; // Reset alpha
+        ctx.globalAlpha = 1; 
       }
     }
 
     function createFirework() {
-      // Start from bottom of the screen
       const x = Math.random() * canvas.width;
       const y = canvas.height;
       particles.push(new Particle(x, y, true));
     }
 
     function animateFireworks() {
-      // 1. Properly fade out the previous frame to create trails
       ctx.globalCompositeOperation = 'destination-out';
       ctx.fillStyle = 'rgba(0, 0, 0, 0.2)'; 
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      // 2. Draw new particles normally so they are fully visible
       ctx.globalCompositeOperation = 'source-over';
 
       for (let i = particles.length - 1; i >= 0; i--) {
@@ -813,7 +932,6 @@
         p.update();
         p.draw();
 
-        // If rocket dies, explode into smaller particles
         if (p.life <= 0) {
           if (p.isRocket) {
             for (let j = 0; j < 50; j++) {
@@ -824,7 +942,6 @@
         }
       }
 
-      // Randomly shoot a new firework
       if (Math.random() < 0.04) {
         createFirework();
       }
