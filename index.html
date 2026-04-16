@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Happy Birthday Mansi</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg1: #0f172a;
+      --bg2: #1e293b;
+      --accent1: #f97316;
+      --accent2: #ec4899;
+      --accent3: #22c55e;
+      --text-main: #f9fafb;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #020617;
+      color: var(--text-main);
+      min-height: 100vh;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    /* Canvas for Fireworks */
+    #fireworksCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1; /* Behind content but above background */
+      pointer-events: none;
+    }
+
+    section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 20px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .centered-column {
+      text-align: center;
+      max-width: 1000px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    /* GLOBAL EFFECTS */
+    .glass-card {
+      background: rgba(15, 23, 42, 0.75);
+      border-radius: 24px;
+      padding: 30px 20px;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      backdrop-filter: blur(16px);
+    }
+
+    @media (min-width: 640px) {
+      .glass-card {
+        padding: 40px 32px;
+      }
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      color: #e5e7eb;
+      background: rgba(15, 23, 42, 0.8);
+      margin-bottom: 16px;
+    }
+
+    .pill-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #facc15 0, #f97316 60%, #b45309 100%);
+      box-shadow: 0 0 12px rgba(250, 204, 21, 0.8);
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 4vw, 3rem);
+      margin: 16px 0 12px;
+      letter-spacing: 0.05em;
+      font-weight: 800;
+      background: linear-gradient(to right, #facc15, #f97316);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      margin-top: 10px;
+      opacity: 0.9;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.8;
+      color: #cbd5e1;
+    }
+
+    .primary-btn,
+    .cta-btn {
+      margin-top: 30px;
+      padding: 14px 32px;
+      border-radius: 999px;
+      border: none;
+      background: linear-gradient(135deg, #f97316, #ec4899);
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.05rem;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(236, 72, 153, 0.4);
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+
+    .primary-btn:hover,
+    .cta-btn:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 15px 40px rgba(236, 72, 153, 0.6);
+    }
+
+    /* SECTION 1: Intro */
+    #intro {
+      background: radial-gradient(circle at top, #1e293b 0, #020617 80%);
+    }
+
+    .hero-heading {
+      font-family: "Courier New", monospace;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin: 10px 0;
+      color: #fff;
+      text-shadow: 0 0 20px rgba(129, 140, 248, 0.5);
+      min-height: 3rem;
+    }
+
+    /* SECTION 2: Image with Text (New) */
+    #diamond {
+      background: #020617;
+    }
+
+    .diamond-layout {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      align-items: center;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    @media (min-width: 860px) {
+      .diamond-layout {
+        flex-direction: row;
+        text-align: left;
+      }
+      .diamond-text {
+        flex: 1;
+        padding-right: 40px;
+      }
+      .diamond-image {
+        flex: 1;
+      }
+    }
+
+    .diamond-text h2 {
+      font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+      line-height: 1.2;
+      margin-bottom: 20px;
+      color: #facc15;
+    }
+
+    .diamond-text p {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: #cbd5e1;
+      margin-bottom: 16px;
+    }
+
+    .diamond-img-wrapper {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .diamond-img-wrapper img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+
+    .diamond-img-wrapper:hover img {
+      transform: scale(1.05);
+    }
+
+    /* SECTION 3: CARDS (Slick Slider) */
+    #memories {
+      background: radial-gradient(circle at center, #0f172a 0, #020617 100%);
+      display: block; /* Overriding flex for slick slider layout */
+      padding: 100px 20px;
+    }
+
+    .slider-container {
+      margin-top: 50px;
+      padding: 0 20px;
+    }
+
+    .memory-card {
+      margin: 15px;
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      background: #000;
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      height: 400px; /* Fixed height for uniform cards */
+      outline: none;
+    }
+
+    .memory-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease, filter 0.4s ease;
+      filter: brightness(0.8);
+    }
+
+    .memory-card:hover img {
+      transform: scale(1.08);
+      filter: brightness(1);
+    }
+
+    .memory-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+      padding: 30px 20px 20px;
+      transform: translateY(20px);
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+
+    .memory-card:hover .memory-overlay {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .memory-message {
+      font-size: 1.05rem;
+      line-height: 1.5;
+      color: #fff;
+      text-align: center;
+      font-weight: 500;
+    }
+
+    /* Slick Customizations */
+    .slick-prev:before, .slick-next:before {
+      color: #f97316 !important;
+      font-size: 30px !important;
+    }
+    .slick-dots li button:before {
+      color: #fff !important;
+      font-size: 12px !important;
+    }
+    .slick-dots li.slick-active button:before {
+      color: #f97316 !important;
+    }
+
+    /* SECTION 4: GIFT */
+    #gift {
+      background: radial-gradient(circle at top, #111827 0, #020617 60%);
+    }
+
+    .gift-layout {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 50px;
+      max-width: 1000px;
+      width: 100%;
+    }
+
+    @media (min-width: 820px) {
+      .gift-layout {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+      .gift-column {
+        flex: 1;
+      }
+      .letter {
+        flex: 1.2;
+      }
+    }
+
+    .gift-column {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .gift-box-wrapper {
+      position: relative;
+      width: 250px;
+      height: 250px;
+      perspective: 1200px;
+      cursor: pointer;
+      margin: 20px 0;
+    }
+
+    .gift-box {
+      position: absolute;
+      inset: 0;
+      transform-style: preserve-3d;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .gift-body {
+      position: absolute;
+      bottom: 0;
+      left: 10%;
+      right: 10%;
+      height: 60%;
+      background: linear-gradient(135deg, #e11d48, #be123c);
+      border-radius: 12px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+      transform-style: preserve-3d;
+    }
+
+    .gift-lid {
+      position: absolute;
+      top: 25%;
+      left: 5%;
+      right: 5%;
+      height: 20%;
+      background: linear-gradient(135deg, #facc15, #eab308);
+      border-radius: 8px;
+      transform-origin: bottom center;
+      transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+      z-index: 2;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+    }
+
+    .gift-ribbon-v {
+      position: absolute;
+      width: 15%;
+      height: 100%;
+      background: #fde047;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    
+    .gift-ribbon-h {
+      position: absolute;
+      width: 100%;
+      height: 15%;
+      background: #fde047;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .gift-bow {
+      position: absolute;
+      top: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 40px;
+      z-index: 3;
+    }
+    .gift-bow::before, .gift-bow::after {
+      content: '';
+      position: absolute;
+      width: 35px;
+      height: 35px;
+      border: 6px solid #e11d48;
+      border-radius: 50% 50% 0 50%;
+      top: 0;
+    }
+    .gift-bow::before { left: -15px; transform: rotate(45deg); }
+    .gift-bow::after { right: -15px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); }
+
+    .gift-box.open .gift-lid {
+      transform: translateY(-80px) rotateX(60deg) rotateZ(20deg);
+      opacity: 0;
+    }
+
+    .gift-box.open {
+      animation: none;
+    }
+
+    .letter {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease;
+      display: none; /* hidden until clicked */
+    }
+
+    .letter.visible {
+      opacity: 1;
+      transform: translateY(0);
+      display: block;
+    }
+
+    .letter h3 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      color: #facc15;
+    }
+
+    .letter p {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      margin-bottom: 15px;
+      color: #e2e8f0;
+    }
+
+    /* SECTION 5: BUY YOUR OWN / WhatsApp */
+    #wish {
+      background: #020617;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .shop-card {
+      background: rgba(30, 41, 59, 0.5);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 20px;
+      padding: 30px;
+      margin-top: 30px;
+    }
+
+    textarea {
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid rgba(148,163,184,0.6);
+      padding: 15px;
+      background: rgba(15,23,42,0.9);
+      color: #e5e7eb;
+      resize: vertical;
+      font-family: inherit;
+      font-size: 1rem;
+      margin-bottom: 15px;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: #f97316;
+      box-shadow: 0 0 10px rgba(249, 115, 22, 0.3);
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="fireworksCanvas"></canvas>
+
+  <section id="intro">
+    <div class="centered-column glass-card">
+      <div class="pill">
+        <span class="pill-dot"></span>
+        <span>Birthday Special for Mansi</span>
+      </div>
+
+      <h1 id="heroText" class="hero-heading"></h1>
+      <p class="subtitle">
+        Today is all about you! Celebrate your smile, your dreams, and the amazing story you keep writing every single year.
+      </p>
+
+      <button id="scrollBtn" class="primary-btn" onclick="document.getElementById('diamond').scrollIntoView({ behavior: 'smooth' });">
+        See your surprise
+      </button>
+    </div>
+  </section>
+
+  <section id="diamond">
+    <div class="diamond-layout">
+      <div class="diamond-text centered-column">
+        <h2>"In the search of gold, I found a diamond"</h2>
+        <p>
+          Some people just bring light wherever they go. Having you as a friend and colleague has been a true blessing. 
+        </p>
+        <p>
+          Your friendly nature, your talkative spirit that always keeps things lively, and the responsible way you handle everything make you so special. You always create such a positive atmosphere for everyone around you. 
+        </p>
+        <p>
+          I was just looking for a good friend, but I found someone truly priceless. Thank you for being exactly who you are.
+        </p>
+      </div>
+      <div class="diamond-image">
+        <div class="diamond-img-wrapper">
+          <img src="https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&q=80&w=800" alt="Beautiful memory" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="memories">
+    <div class="centered-column">
+      <div class="pill">
+        <span class="pill-dot"></span>
+        <span>Eight little wishes</span>
+      </div>
+      <h2 class="section-title">Moments that feel like magic</h2>
+      <p class="subtitle">
+        Hover over each picture to see a simple birthday wish made just for you.
+      </p>
+    </div>
+
+    <div class="slider-container">
+      <div class="slick-slider">
+        <div class="memory-card">
+          <img src="https://images.unsplash.com/photo-1530103862676-de88bfa556a9?auto=format&fit=crop&q=80&w=600" alt="Memory 1" />
+          <div class="memory-overlay">
+            <div class="memory-message">I hope your days are as bright as your laugh and as comforting as your favorite song.</div>
+          </div>
+        </div>
+        <div class="memory-card">
+          <img src="https://images.unsplash.com/photo-1464347744102-11db6282f854?auto=format&fit=crop&q=80&w=600" alt="Memory 2" />
+          <div class="memory-overlay">
+            <div class="memory-message">I hope every morning brings you new hope, and every evening leaves you feeling happy.</div>
+          </div>
+        </div>
+        <div class="memory-card">
+          <img src="https://images.unsplash.com/photo-1516962080544-eac695c93791?auto=format&fit=crop&q=80&w=600" alt="Memory 3" />
+          <div class="memory-overlay">
+            <div class="memory-message">Never lose your courage to follow your biggest dreams, and always keep shining bright.</div>
+          </div>
+        </div>
+        <div class="memory-card">
+          <img src="https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&q=80&w=600" alt="Memory 4" />
+          <div class="memory-overlay">
+            <div class="memory-message">I wish you surround yourself with the right people, good talks, and sweet surprises all year.</div>
+          </div>
+        </div>
+        <div class="memory-card">
+          <img src="https://images.unsplash.com/photo-1505909182942-e2f09aee3e89?auto=format&fit=crop&q=80&w=600" alt="Memory 5" />
+          <div class="memory-overlay">
+            <div class="memory-message">Always remember how special you are, even on days when things feel hard or noisy.</div>
+          </div>
+        </div>
+        <div class="memory-card">
+          <img src="https://images.unsplash.com/photo-1499364615650-ec38552f4f34?auto=format&fit=crop&q=80&w=600" alt="Memory 6" />
+          <div class="memory-overlay">
+            <div class="memory-message">I hope this year brings you so much peace, joy, and beautiful moments.</div>
+          </div>
+        </div>
+        <div class="memory-card">
+          <img src="https://images.unsplash.com/photo-1506869640319-fea1a2ab8ce5?auto=format&fit=crop&q=80&w=600" alt="Memory 7" />
+          <div class="memory-overlay">
+            <div class="memory-message">May your smile always stay as genuine and bright as it is today.</div>
+          </div>
+        </div>
+        <div class="memory-card">
+          <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&q=80&w=600" alt="Memory 8" />
+          <div class="memory-overlay">
+            <div class="memory-message">I hope you get everything you wish for and even more than you expect.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="gift">
+    <div class="gift-layout">
+      <div class="gift-column">
+        <h2 class="section-title" style="font-size: 1.5rem; margin-bottom: 0;">A Final Surprise</h2>
+        <p style="color: #9ca3af; margin-bottom: 20px;">Tap the gift box to open your letter.</p>
+        
+        <div class="gift-box-wrapper" id="giftTrigger">
+          <div class="gift-box" id="giftBox">
+            <div class="gift-body">
+              <div class="gift-ribbon-v"></div>
+              <div class="gift-ribbon-h"></div>
+            </div>
+            <div class="gift-lid">
+              <div class="gift-ribbon-v"></div>
+              <div class="gift-bow"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="letter glass-card" id="letter">
+        <h3>Dear Mansi,</h3>
+        <p>
+          Another year has passed, and I am so thankful that you are in my life. I love your kindness, your laugh, and your strong heart.
+        </p>
+        <p>
+          I hope this birthday brings you easy mornings, exciting new chances, and peaceful nights where you feel proud of yourself.
+        </p>
+        <p>
+          You deserve a beautiful life that always makes you happy. Have the best birthday ever! 🎉
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="wish">
+    <div class="centered-column">
+      <div class="pill">
+        <span class="pill-dot"></span>
+        <span>For your heart</span>
+      </div>
+      <h2 class="section-title">Make a wish for yourself</h2>
+      <p class="subtitle">
+        Close your eyes, take a deep breath, and write down one promise you want to keep for yourself this year.
+      </p>
+
+      <div class="shop-card">
+        <p style="font-size: 1.05rem; margin-bottom: 15px;">
+          Write your birthday wish below, then tap "Send to WhatsApp" to share it.
+        </p>
+        <textarea id="wishText" rows="4" placeholder="This year, I promise myself that..."></textarea>
+        <button class="cta-btn" onclick="sendWishToWhatsApp()" style="width: 100%; max-width: 300px;">
+          Send to WhatsApp 📱
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+  <script>
+    // --- TYPEWRITER EFFECT ---
+    function typeWriterText(element, text, speed) {
+      let index = 0;
+      element.innerHTML = "";
+      const timer = setInterval(() => {
+        element.innerHTML += text.charAt(index);
+        index++;
+        if (index >= text.length) {
+          clearInterval(timer);
+        }
+      }, speed);
+    }
+
+    window.onload = () => {
+      typeWriterText(document.getElementById("heroText"), "Happy Birthday Mansi", 100);
+    };
+
+    // --- SLICK SLIDER INIT ---
+    $(document).ready(function(){
+      $('.slick-slider').slick({
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 3000,
+        responsive: [
+          {
+            breakpoint: 1024,
+            settings: { slidesToShow: 2 }
+          },
+          {
+            breakpoint: 640,
+            settings: { slidesToShow: 1 }
+          }
+        ]
+      });
+    });
+
+    // --- GIFT BOX LOGIC ---
+    const giftTrigger = document.getElementById("giftTrigger");
+    const giftBox = document.getElementById("giftBox");
+    const letter = document.getElementById("letter");
+    let isOpened = false;
+
+    giftTrigger.addEventListener("click", () => {
+      if(isOpened) return;
+      isOpened = true;
+      giftBox.classList.add("open");
+      
+      // Trigger a big fireworks burst when opened
+      for(let i=0; i<15; i++) {
+        setTimeout(createFirework, i * 100);
+      }
+
+      setTimeout(() => {
+        letter.classList.add("visible");
+      }, 600);
+    });
+
+    // --- WHATSAPP LOGIC ---
+    function sendWishToWhatsApp() {
+      const wish = document.getElementById("wishText").value.trim();
+      if (!wish) {
+        alert("Please write your wish first! 💭");
+        return;
+      }
+      const msg = `🎂 My birthday wish for myself:\n\n${wish}\n\nCan you keep this safe for me? 💕`;
+      const url = `https://wa.me/918600867819?text=${encodeURIComponent(msg)}`;
+      window.open(url, "_blank");
+    }
+
+    // --- CANVAS FIREWORKS (Bottom to Top) ---
+    const canvas = document.getElementById("fireworksCanvas");
+    const ctx = canvas.getContext("2d");
+    
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    const particles = [];
+    const colors = ["#f97316", "#ec4899", "#22c55e", "#facc15", "#3b82f6", "#a855f7"];
+
+    class Particle {
+      constructor(x, y, isRocket = true, color = null) {
+        this.x = x;
+        this.y = y;
+        this.isRocket = isRocket;
+        this.color = color || colors[Math.floor(Math.random() * colors.length)];
+        
+        if (this.isRocket) {
+          // Shoot up
+          this.vx = (Math.random() - 0.5) * 2;
+          this.vy = -(Math.random() * 5 + 8); // Speed upwards
+          this.life = 1;
+          this.decay = 0.01 + Math.random() * 0.01;
+        } else {
+          // Explode outwards
+          const angle = Math.random() * Math.PI * 2;
+          const speed = Math.random() * 5 + 1;
+          this.vx = Math.cos(angle) * speed;
+          this.vy = Math.sin(angle) * speed;
+          this.life = 1;
+          this.decay = 0.02 + Math.random() * 0.03;
+        }
+      }
+
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        this.life -= this.decay;
+
+        if (this.isRocket) {
+          this.vy += 0.1; // Gravity pulling rocket down
+        } else {
+          this.vy += 0.05; // Gravity for explosion particles
+          this.vx *= 0.98; // Friction
+        }
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.isRocket ? 3 : 2, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.globalAlpha = Math.max(0, this.life);
+        ctx.fill();
+        ctx.globalAlpha = 1;
+      }
+    }
+
+    function createFirework() {
+      // Start from bottom of the screen
+      const x = Math.random() * canvas.width;
+      const y = canvas.height;
+      particles.push(new Particle(x, y, true));
+    }
+
+    function animateFireworks() {
+      ctx.fillStyle = "rgba(2, 6, 23, 0.2)"; // Trailing effect
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+        p.update();
+        p.draw();
+
+        // If rocket dies, explode
+        if (p.life <= 0) {
+          if (p.isRocket) {
+            for (let j = 0; j < 40; j++) {
+              particles.push(new Particle(p.x, p.y, false, p.color));
+            }
+          }
+          particles.splice(i, 1);
+        }
+      }
+
+      // Randomly shoot a new firework occasionally
+      if (Math.random() < 0.03) {
+        createFirework();
+      }
+
+      requestAnimationFrame(animateFireworks);
+    }
+
+    animateFireworks();
+  </script>
+</body>
+</html>
