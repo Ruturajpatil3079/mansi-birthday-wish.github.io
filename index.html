@@ -799,33 +799,34 @@
       particles.push(new Particle(x, y, true));
     }
 
-    function animateFireworks() {
-      ctx.fillStyle = "rgba(2, 6, 23, 0.2)"; // Trailing effect
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+function animateFireworks() {
+  // Use pure black with 0.2 opacity so it perfectly disappears with mix-blend-mode
+  ctx.fillStyle = "rgba(0, 0, 0, 0.2)"; 
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      for (let i = particles.length - 1; i >= 0; i--) {
-        const p = particles[i];
-        p.update();
-        p.draw();
+  for (let i = particles.length - 1; i >= 0; i--) {
+    const p = particles[i];
+    p.update();
+    p.draw();
 
-        // If rocket dies, explode
-        if (p.life <= 0) {
-          if (p.isRocket) {
-            for (let j = 0; j < 40; j++) {
-              particles.push(new Particle(p.x, p.y, false, p.color));
-            }
-          }
-          particles.splice(i, 1);
+    // If rocket dies, explode
+    if (p.life <= 0) {
+      if (p.isRocket) {
+        for (let j = 0; j < 40; j++) {
+          particles.push(new Particle(p.x, p.y, false, p.color));
         }
       }
-
-      // Randomly shoot a new firework occasionally
-      if (Math.random() < 0.03) {
-        createFirework();
-      }
-
-      requestAnimationFrame(animateFireworks);
+      particles.splice(i, 1);
     }
+  }
+
+  // Randomly shoot a new firework occasionally
+  if (Math.random() < 0.03) {
+    createFirework();
+  }
+
+  requestAnimationFrame(animateFireworks);
+}
 
     animateFireworks();
   </script>
